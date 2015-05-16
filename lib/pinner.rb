@@ -15,6 +15,7 @@ module Pinner
       @application ||= Lotus::Router.new do
         get '/', to: -> (env) { [200, {}, ['Hello from pinner!']] }
         get '/send_pin', to: Pinner::SendPin
+        post '/authorize', to: Pinner::Authorize
       end
     end
     
