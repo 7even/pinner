@@ -1,9 +1,8 @@
-require 'spec_helper'
-
 RSpec.describe Pinner::SendPin do
   describe '#call' do
     before(:each) do
       allow(subject).to receive(:generate_pin).and_return('123456')
+      allow(subject).to receive(:dump_to_redis)
     end
     
     it 'generates the pin' do
@@ -34,21 +33,11 @@ RSpec.describe Pinner::SendPin do
     end
   end
   
-  describe '#encode_pin' do
-    let(:pin) { subject.generate_pin }
-    
-    it 'returns a SHA256 hexdigest of the given pin' do
-      expect(subject.encode_pin(pin)).to eq(
-        Digest::SHA256.hexdigest(pin + ENV['SALT'])
-      )
-    end
-  end
-  
   describe '#dump_to_redis' do
     let(:pin_digest) { 'pin:digest' }
     
     before(:each) do
-      allow(subject).to receive(:encode_pin).and_return(pin_digest)
+      allow(Pinner).to receive(:encode_pin).and_return(pin_digest)
     end
     
     it 'puts the pin digest to redis' do
