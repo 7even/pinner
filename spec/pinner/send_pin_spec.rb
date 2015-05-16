@@ -1,6 +1,32 @@
 require 'spec_helper'
 
 RSpec.describe Pinner::SendPin do
+  describe '#call' do
+    before(:each) do
+      allow(subject).to receive(:generate_pin).and_return('123456')
+    end
+    
+    it 'generates the pin' do
+      expect(subject).to receive(:generate_pin)
+      subject.call({})
+    end
+    
+    it 'sends the pin' do
+      expect(subject).to receive(:send_pin).with('123456')
+      subject.call({})
+    end
+    
+    it 'dumps the pin to redis' do
+      expect(subject).to receive(:dump_to_redis).with('123456')
+      subject.call({})
+    end
+    
+    it 'includes the pin in the response body' do
+      status, headers, body = subject.call({})
+      expect(body).to eq(['123456'])
+    end
+  end
+  
   describe '#generate_pin' do
     it 'generates a unique pin code' do
       pins = 100.times.map { subject.generate_pin }

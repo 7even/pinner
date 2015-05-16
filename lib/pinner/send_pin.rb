@@ -5,7 +5,11 @@ module Pinner
     PIN_TTL = (60 * 60 * 10).freeze
     
     def call(env)
-      [200, {}, [generate_pin]]
+      pin = generate_pin
+      send_pin(pin)
+      dump_to_redis(pin)
+      
+      [200, {}, [pin]]
     end
     
     def generate_pin
