@@ -2,6 +2,9 @@ require 'bundler/setup'
 require 'lotus/router'
 require 'pry'
 
+require 'dotenv'
+Dotenv.load
+
 $LOAD_PATH << File.expand_path('..', __FILE__)
 require 'pinner/send_pin'
 
