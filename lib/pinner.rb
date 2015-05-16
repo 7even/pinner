@@ -16,5 +16,9 @@ module Pinner
         get '/send_pin', to: Pinner::SendPin
       end
     end
+    
+    def redis
+      @redis ||= Redis.new
+    end
   end
 end
