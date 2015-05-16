@@ -1,0 +1,33 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    awesome_print (1.6.1)
+    awesome_pry (0.0.1)
+      awesome_print
+      pry-rails
+    coderay (1.1.0)
+    http_router (0.11.1)
+      rack (>= 1.0.0)
+      url_mount (~> 0.2.1)
+    lotus-router (0.4.0)
+      http_router (~> 0.11)
+      lotus-utils (~> 0.4, >= 0.4.1)
+    lotus-utils (0.4.2)
+    method_source (0.8.2)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
+    rack (1.6.1)
+    slop (3.6.0)
+    url_mount (0.2.1)
+      rack
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  awesome_pry
+  lotus-router
