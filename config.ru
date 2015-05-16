@@ -1,3 +1,3 @@
-require_relative 'application'
+require_relative './lib/pinner'
 
 run Pinner.application
