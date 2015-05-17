@@ -5,12 +5,7 @@ RSpec.describe Pinner::SendPin do
       allow(subject).to receive(:dump_to_redis)
     end
     
-    it 'generates the pin' do
-      expect(subject).to receive(:generate_pin)
-      subject.call({})
-    end
-    
-    it 'sends the pin' do
+    it 'sends the generated pin' do
       expect(subject).to receive(:send_pin).with('123456')
       subject.call({})
     end

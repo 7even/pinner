@@ -3,11 +3,12 @@ module Pinner
     def call(env)
       request = Rack::Request.new(env)
       pin = request.params['pin']
+      return [400, {}, []] if pin.nil?
       
-      if pin.nil?
-        [400, {}, []]
-      elsif valid_pin?(pin)
-        delete_pin(pin)
+      pin_digest = Pinner.encode_pin(pin)
+      
+      if valid_pin?(pin_digest)
+        delete_pin(pin_digest)
         [200, { 'X-Access-Token' => Authorize.generate_token }, []]
       else
         [401, {}, []]
@@ -15,13 +16,11 @@ module Pinner
     end
     
   private
-    def valid_pin?(pin)
-      pin_digest = Pinner.encode_pin(pin)
+    def valid_pin?(pin_digest)
       Pinner.redis.exists(pin_digest)
     end
     
-    def delete_pin(pin)
-      pin_digest = Pinner.encode_pin(pin)
+    def delete_pin(pin_digest)
       Pinner.redis.del(pin_digest)
     end
     

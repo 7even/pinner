@@ -2,7 +2,8 @@ require 'redis'
 
 module Pinner
   class SendPin
-    PIN_TTL = (60 * 60 * 10).freeze
+    # 10 minutes
+    PIN_TTL = (60 * 10).freeze
     
     def call(env)
       pin = generate_pin
